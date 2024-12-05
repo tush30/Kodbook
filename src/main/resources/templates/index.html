@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Clone</title>
+    <style>
+        /* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color:  #fff9d1;
+     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    
+}
+
+/* Left Section */
+.left-section {
+    flex: 1;
+    margin-right: 30px;
+}
+
+.left-section h1 {
+    color: #f5b301;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.left-section p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Right Section */
+.right-section {
+    flex: 0.5;
+    background-color: #ffec99;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Login Box */
+.login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffec99;
+    
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.login-btn {
+    background-color: #f5b301;
+    color: white;
+    font-weight: bold;
+}
+
+.signup-btn {
+    background-color: #42b72a;
+    color: white;
+    font-weight: bold;
+}
+
+.forgot-link {
+    color: #1877f2;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #dddfe2;
+    margin: 20px 0;
+}
+ button:hover {
+            background-color: #070706;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h1>KodBook</h1>
+            <p>Connect with friends and the world around you on KodBook.</p>
+        </div>
+        <div class="right-section">
+            <div class="login-box">
+                <form action="/loginpage" method="post">
+                    <input type="text" name="email" placeholder="Email" class="input-field">
+                    <input type="password" name="password" placeholder="Password" class="input-field">
+                    <p th:if="${msg}" th:text="${msg}"></p>
+                    <button type="submit" class="btn login-btn">Log In</button>
+                </form>
+                <a href="/forgotpass" class="forgot-link">Forgotten password?</a>
+                <hr>
+               <a href="/signuppage"> <input class="btn signup-btn" type="submit" value="Create New Account"></a>
+            </div>
+            
+        </div>
+        
+    </div>
+</body>
+</html>

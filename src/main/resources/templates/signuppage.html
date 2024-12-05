@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Page</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff9d1; /* Light yellow background */
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container Styling */
+    .container {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    /* Header Styling */
+    header {
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #f5b301; /* Yellow Theme */
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    /* Sign-Up Box */
+    .signup-box {
+      background-color: #ffec99; /* Yellow Box */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .signup-box h2 {
+      color: #f5b301; /* Yellow */
+      margin-bottom: 10px;
+    }
+
+    .signup-box p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    /* Form Styling */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    button {
+      background-color: #f5b301; /* Yellow */
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d49f01; /* Darker Yellow */
+    }
+
+    .password-strength {
+      height: 10px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+
+    .weak { background-color: red; }
+    .medium { background-color: orange; }
+    .strong { background-color: green; }
+
+    .rules {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .rules ul {
+      margin-top: 5px;
+      padding-left: 20px;
+      list-style: disc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>KodBook</h1>
+      <p>Connect with friends and the world around you.</p>
+    </header>
+    <main>
+      <div class="signup-box">
+        <h2>Sign Up</h2>
+        <p>It’s quick and easy.</p>
+        <form id="signupForm" action="/signup" method="post">
+          <div class="input-group">
+            <input type="text" name="username" placeholder="Username" required>
+          </div>
+          <input type="email" name="email" placeholder="Email address" required>
+          <input type="password" id="password"  placeholder="Password" required>
+          <div class="password-strength">
+            <div class="strength-bar" id="strengthBar"></div>
+          </div>
+          <input type="password" name="password" id="confirmPassword" placeholder="Confirm Password" required>
+          <p id="passwordMessage" style="color: red; display: none;">Passwords do not match</p>
+          <label for="birthdate">Date of Birth:</label>
+          <input type="date" id="birthdate" name="dob" required>
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="female" >Female</option>
+            <option value="male">Male</option>
+            <option value="custom">Custom</option>
+          </select>
+          <button type="submit">Sign Up</button>
+          <span th:if="${msg}" th:text="${msg}"></span>
+        </form>
+        <div class="rules">
+          <button onclick="toggleRules()">Password Rules</button>
+          <ul id="rulesList" style="display: none;">
+            <li>At least 8 characters</li>
+            <li>At least one uppercase letter</li>
+            <li>At least one lowercase letter</li>
+            <li>At least one number</li>
+            <li>At least one special character (!@#$%^&*)</li>
+          </ul>
+        </div>
+        <label>If already have account ?</label>
+        <a href="index">Login here</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordMessage = document.getElementById('passwordMessage');
+    const strengthBar = document.getElementById('strengthBar');
+    const rulesList = document.getElementById('rulesList');
+
+    // Password Strength Check
+    password.addEventListener('input', () => {
+      const value = password.value;
+      let strength = 0;
+
+      if (value.length >= 8) strength++;
+      if (/[A-Z]/.test(value)) strength++;
+      if (/[a-z]/.test(value)) strength++;
+      if (/[0-9]/.test(value)) strength++;
+      if (/[@$!%*?&#]/.test(value)) strength++;
+
+      strengthBar.style.width = `${strength * 20}%`;
+
+      if (strength < 2) {
+        strengthBar.className = 'strength-bar weak';
+      } else if (strength < 4) {
+        strengthBar.className = 'strength-bar medium';
+      } else {
+        strengthBar.className = 'strength-bar strong';
+      }
+    });
+
+    // Password Matching Check
+    confirmPassword.addEventListener('input', () => {
+      if (password.value !== confirmPassword.value) {
+        passwordMessage.style.display = 'block';
+      } else {
+        passwordMessage.style.display = 'none';
+      }
+    });
+
+    // Toggle Password Rules
+    function toggleRules() {
+      rulesList.style.display = rulesList.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
