@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup Example</title>
+  <style>
+    /* Styling for the popup container (hidden by default) */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      display: none; /* Initially hidden */
+      z-index: 1000;
+    }
+
+    /* Overlay behind the popup */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 110%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none; /* Initially hidden */
+      z-index: 999;
+    }
+
+    /* Close button styling */
+    .popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 5px;
+      font-size: 14px;
+      padding: 0;
+     
+    }
+      div {
+      margin-bottom: 15px;
+      }
+      label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      }
+      input[type="text"],
+      input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      }
+      button:hover {
+      background-color: #218838;
+      }
+  </style>
+</head>
+<body>
+  <!-- Button to Open Popup -->
+  <button onclick="showPopup()">create Profile</button>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Popup Container -->
+  <div class="popup" id="popup">
+    <button class="close-btn" onclick="hidePopup()" >X</button>
+    <h2>Create Post</h2>
+    <form action="/addpost" method="post" enctype="multipart/form-data">
+       
+      <label for="caption">Caption<input type="text" name="caption" id="caption">
+      </label>
+      <label for="photo">Photo</label><input type="file" name="photo" accept="image/*" required id="photo">
+      <button type="submit">Post</button>
+</form>
+  </div>
+
+  <script>
+    // Function to show the popup
+    function showPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    // Function to hide the popup
+    function hidePopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,11 @@
 package com.kodbook.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kodbook.entities.Post;
 import com.kodbook.entities.User;
 import com.kodbook.repositories.UserRepository;
 
@@ -72,6 +75,8 @@ public class UserServiceImplementation implements UserService{
 			System.out.println("email not found");
 		}
 	}
+
+	
 	
 	
 }

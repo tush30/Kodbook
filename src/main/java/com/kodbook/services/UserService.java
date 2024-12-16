@@ -1,5 +1,8 @@
 package com.kodbook.services;
 
+import java.util.List;
+
+
 import com.kodbook.entities.User;
 
 public interface UserService {
@@ -13,5 +16,7 @@ public interface UserService {
 	boolean validateEmail(String email);
 
 	void validatepassword(String email,String password );
+
+	
 
 }

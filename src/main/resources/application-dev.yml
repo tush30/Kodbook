@@ -1,0 +1,10 @@
+#Server
+SERVER_PORT: 9001
+ACTIVE_PROFILE: dev
+
+#Email Config
+EMAIL_HOST: smtp.gmail.com
+EMAIL_PORT: 587
+EMAIL_ID: tushrathod2002@gmail.com
+EMAIL_PASSWORD: axcg wqoq tqqc vzaf
+VERIFY_EMAIL_HOST: http://localhost:${SERVER_PORT}
