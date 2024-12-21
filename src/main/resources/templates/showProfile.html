@@ -325,12 +325,12 @@ li span {
     
 	    <div class="profile">
 	    <!-- Display the profile image if available -->
-    <img th:if="${user != null and user.photoBase64 != null}"
-         th:src="'data:image/jpeg;base64,' + ${user.photoBase64}" 
+    <img th:if="${logedUser != null and logedUser.photoBase64 != null}"
+         th:src="'data:image/jpeg;base64,' + ${logedUser.photoBase64}" 
          alt="dp_image" id="profile" />
 
     <!-- Show a fallback text if no photo is available -->
-    <p th:if="${user == null or user.photoBase64 == null}">No photo available</p>
+    <p th:if="${logedUser == null or logedUser.photoBase64 == null}">No photo available</p>
     
     <!-- Display the session username -->
     <p th:text="${session.username}"></p>
@@ -343,7 +343,7 @@ li span {
     <!-- Left Sidebar -->
     <div class="sidebar">
       <ul>
-        <a href="">Home</a><br>
+        <a href="/refreshlogin">Home</a><br>
         <a href="/myprofile">My Profile</a><br>
         <a href="/logout">LogOut here</a>
       </ul>
@@ -351,17 +351,13 @@ li span {
 
     <!-- Feed Section -->
     <div class="feed">
-      <div class="create-post">
-        
-        <button onclick="showPopup()">New Post</button>
-      </div>
-
+ 
       <!-- Example Posts -->
     
-      <div class="post" th:each="photo:${photolist}">
+      <div class="post" th:each="photo:${mypost}">
       
 	<div id="post-name">
-		<form action="/visitprofile" method="get">
+	
 		<img th:if="${photo.user != null and photo.user.photoBase64 != null}"
          th:src="'data:image/jpeg;base64,' + ${photo.user.photoBase64}" 
          alt="dp_image" id="profile" />
@@ -370,9 +366,8 @@ li span {
     	<p th:if="${photo.user == null or photo.user.photoBase64 == null}">No photo available</p>
     	<input type="hidden" name="username" th:value="${photo.user.username}">
 	      <strong id="names" th:text="${photo.user.username}"></strong>
-	       <input type="submit" value="Visit profile">
-	        
-	       </form> 
+	     
+	         
 	 </div>
  		<p th:text="${photo.caption}">[cpation]</p>
 	        
@@ -407,64 +402,9 @@ li span {
     
     </div>
    
-    <!-- Right Sidebar -->
-    <div class="right-sidebar">
-      <h3>Online Friends</h3>
-      <ul class="online-friends">
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> John</li>
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mary</li>
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mike</li>
-      </ul>
-    </div>
-  </div>
+    
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- Popup Container -->
-  <div class="popup" id="popup">
-    <button class="close-btn" onclick="hidePopup()" >X</button>
-    <h2>Create Post</h2>
-    <form action="/addpost" method="post" enctype="multipart/form-data">
-       
-      <label for="caption">Caption<input type="text" name="caption" id="caption">
-      </label>
-      <label for="photo">Photo<input type="file" name="photo" accept="image/*" required id="image">
-      <button type="submit">Post</button>
-	</form>
-	</div>
-  <!-- Pop cr
-  eate post scrpit -->
-  <script>
-    // Function to show the popup
-    function showPopup() {
-      document.getElementById("popup").style.display = "block";
-      document.getElementById("overlay").style.display = "block";
-    }
-
-    // Function to hide the popup
-    function hidePopup() {
-      document.getElementById("popup").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
-    }
-    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData();
-        formData.append('image', document.getElementById('image').files[0]);
-
-        const response = await fetch('/addpost', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          alert('Image uploaded successfully!');
-          // Optionally, redirect or update the page content dynamically
-        } else {
-          alert('Failed to upload image.');
-        }
-      });
-  </script>
+ 
+ 
 </body>
 </html>

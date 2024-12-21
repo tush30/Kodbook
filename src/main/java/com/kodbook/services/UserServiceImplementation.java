@@ -76,6 +76,27 @@ public class UserServiceImplementation implements UserService{
 		}
 	}
 
+	@Override
+	public void updateProfile(User user) {
+		// TODO Auto-generated method stub
+		repo.save(user);
+	}
+
+	@Override
+	public String getuserName(String email) {
+		
+		User user =repo.findByEmail(email);
+		return  user.getUsername();
+	}
+
+	@Override
+	public User getProfileUsername(String username) {
+		// TODO Auto-generated method stub
+		return repo.findByUsername(username);
+	}
+
+	
+
 	
 	
 	

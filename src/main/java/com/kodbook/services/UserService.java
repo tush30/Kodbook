@@ -17,6 +17,14 @@ public interface UserService {
 
 	void validatepassword(String email,String password );
 
+	void updateProfile(User user);
+
+	String getuserName(String email);
+
+	User getProfileUsername(String username);
+
+	
+
 	
 
 }

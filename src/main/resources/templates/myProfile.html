@@ -1,10 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"	>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Profile</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .profile-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Profile Image in Circle */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-details {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .profile-details p {
+            font-size: 1rem;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .profile-details strong {
+            color: #4CAF50;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-container {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-<a href="/editprofile">Edit profile</a>
+<a href="/refreshlogin">Go Home</a><br>
+    <div class="profile-container">
+        <!-- Profile Image -->
+       <img th:if="${user.photoBase64}"
+	        th:src="'data:image/jpeg;base64,'+${user.photoBase64}" 
+	        alt="dp_image" class="profile-img">
+	         <p th:if="!user.photoBase64">No photo available</p>
+
+        <!-- User Name -->
+        <h1><span th:text="${user.username}"></span></h1>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+            <p><strong>Date of Birth:</strong> <span th:text="${user.dob}"></span></p>
+            <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+            <p><strong>City:</strong> <span th:text="${user.city}"></span></p>
+            <p><strong>Bio:</strong> <span th:text="${user.bio}"></span></p>
+            <p><strong>College:</strong> <span th:text="${user.college}"></span></p>
+            <p><strong>LinkedIn:</strong> <a  target="_blank"><span th:text="${user.linkedIn}"></span></a></p>
+            <p><strong>GitHub:</strong> <a  target="_blank"><span th:text="${user.github}"></span></a></p>
+        </div>
+    </div>
+    <a href="/updateProfileuser">Edit here</a>
 </body>
 </html>

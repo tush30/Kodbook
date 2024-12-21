@@ -38,13 +38,7 @@ public class User {
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] dp;
 	
-	public String getPhotoBase64() {
-		if(dp == null) {
-			return null;
-		}else {
-		return Base64.getEncoder().encodeToString(dp);
-		}
-	}
+	
 	
 	public User() {
 		super();
@@ -171,6 +165,13 @@ public class User {
 
 	public void setDp(byte[] dp) {
 		this.dp = dp;
+	}
+	public String getPhotoBase64() {
+		if(dp == null) {
+			return null;
+		}else {
+		return Base64.getEncoder().encodeToString(dp);
+		}
 	}
 
 	@Override
