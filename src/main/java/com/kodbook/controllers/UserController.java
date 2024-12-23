@@ -165,12 +165,15 @@ public class UserController {
 			service.updateProfile(user);
 			return "myProfile";
 	}
+	
 	@GetMapping("/myprofile")
 	public String myrofile(Model model,HttpSession session) {
 		String username1 =(String) session.getAttribute("username");
 		//fetch the user object using username
 		User user =service.getProfileUsername(username1);
 		model.addAttribute("user", user);
+		List<Post> post = user.getPosts();
+		model.addAttribute("userphotolist",post);
 		return "myProfile";
 	}
 	

@@ -58,6 +58,114 @@
         .profile-details strong {
             color: #4CAF50;
         }
+         .post {
+         
+     
+      margin: 50px auto;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width:600px;
+      padding: 20px;
+            
+    }
+
+    .post img {
+      width: 100%;
+      border-radius: 10px;
+    }
+         #profile{
+        
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+        
+      }
+      #post-name{
+        display: flex;
+      }
+      #post-name strong{
+        padding: 8px;
+      }
+      /* Likes Section */
+strong {
+    color: #444;
+    font-size: 1.1em;
+}
+
+span {
+    font-weight: bold;
+    color: #007BFF;
+}
+/* Like and Comment Forms */
+form {
+    margin: 15px 0;
+}
+
+form input[type="hidden"] {
+    display: none;
+}
+
+form input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Comment Textarea */
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 8px 0;
+    resize: none;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9em;
+}
+
+/* Comments List */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+li span {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form textarea {
+        font-size: 0.85em;
+    }
+    form input[type="submit"] {
+        font-size: 0.85em;
+    }
+}
+        
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -70,12 +178,13 @@
 </head>
 <body>
 <a href="/refreshlogin">Go Home</a><br>
+<a href="/updateProfileuser">Edit here</a>
     <div class="profile-container">
         <!-- Profile Image -->
        <img th:if="${user.photoBase64}"
 	        th:src="'data:image/jpeg;base64,'+${user.photoBase64}" 
 	        alt="dp_image" class="profile-img">
-	         <p th:if="!user.photoBase64">No photo available</p>
+	         <p th:if="!${user.photoBase64}">No photo available</p>
 
         <!-- User Name -->
         <h1><span th:text="${user.username}"></span></h1>
@@ -91,6 +200,47 @@
             <p><strong>GitHub:</strong> <a  target="_blank"><span th:text="${user.github}"></span></a></p>
         </div>
     </div>
-    <a href="/updateProfileuser">Edit here</a>
+    
+    
+    <h1 style="text-align: center;">My Posts</h1>
+      <div class="post" th:each="mypost:${userphotolist}">
+      
+      <img th:if="${user.photoBase64}"
+	        th:src="'data:image/jpeg;base64,'+${user.photoBase64}" 
+	        alt="dp_image" id="profile">
+	         <p th:if="!${user.photoBase64}">No photo available</p>
+
+        <!-- User Name -->
+        <span th:text="${user.username}"></span>
+	
+ 		<p th:text="${mypost.caption}">[cpation]</p>
+	        
+	       <img th:if="${mypost.photoBase64}"
+	        th:src="'data:image/jpeg;base64,'+${mypost.photoBase64}" 
+	        alt="post_image">
+	      
+	       <p th:if="!${mypost.photoBase64}">No photo available</p>
+	        <p th:if="${msg}" th:text="${msg}">[msg]</p>
+        	
+        	<div class="photo-section">
+			    <p><strong>Likes:</strong>
+			        <span th:text="${mypost.like_count}">[like]</span>
+			    </p>
+			    <form action="/addlike" method="post">
+			        <input type="hidden" name="idp" th:value="${mypost.idp}">
+			        <input type="submit" value="Like">
+			    </form>
+			    <form action="/addcomment" method="post">
+			        <input type="hidden" name="idp" th:value="${mypost.idp}">
+			        <textarea name="comment" placeholder="Add your comment here..."></textarea>
+			        <input type="submit" value="Comment">
+			    </form>
+			    <ul>
+			        <li th:each="comment : ${mypost.comments}">
+			            <span th:text="${comment}"></span>
+			        </li>
+			    </ul>
+			</div>
+			</div>
 </body>
 </html>

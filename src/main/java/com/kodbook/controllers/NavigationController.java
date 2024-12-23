@@ -46,8 +46,14 @@ public class NavigationController {
 	}
 	
 	@GetMapping("/updateProfileuser")
-	public String editProfile() {
+	public String editProfile(HttpSession session) {
+		//validating if user is logged the get acces for edit if session is null the redirecting to the index page
+		if(session.getAttribute("username")!= null) {
 		return "/editprofile";
+		}
+		else {
+			return "index";
+		}
 	}
 	@GetMapping("/visitprofile")
 	public String visituserProfile(@RequestParam String username,Model model,HttpSession session) {

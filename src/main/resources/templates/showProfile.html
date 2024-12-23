@@ -305,6 +305,46 @@ li span {
     color: #555;
 }
 
+.profile-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Profile Image in Circle */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-details {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .profile-details p {
+            font-size: 1rem;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .profile-details strong {
+            color: #4CAF50;
+        }
 /* Responsive Design */
 @media (max-width: 768px) {
     form textarea {
@@ -353,6 +393,27 @@ li span {
     <div class="feed">
  
       <!-- Example Posts -->
+      <div class="profile-container">
+        <!-- Profile Image -->
+       <img th:if="${user.photoBase64}"
+	        th:src="'data:image/jpeg;base64,'+${user.photoBase64}" 
+	        alt="dp_image" class="profile-img">
+	         <p th:if="!${user.photoBase64}">No photo available</p>
+
+        <!-- User Name -->
+        <h1><span th:text="${user.username}"></span></h1>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+            <p><strong>Date of Birth:</strong> <span th:text="${user.dob}"></span></p>
+            <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+            <p><strong>City:</strong> <span th:text="${user.city}"></span></p>
+            <p><strong>Bio:</strong> <span th:text="${user.bio}"></span></p>
+            <p><strong>College:</strong> <span th:text="${user.college}"></span></p>
+            <p><strong>LinkedIn:</strong> <a  target="_blank"><span th:text="${user.linkedIn}"></span></a></p>
+            <p><strong>GitHub:</strong> <a  target="_blank"><span th:text="${user.github}"></span></a></p>
+        </div>
+    </div>
     
       <div class="post" th:each="photo:${mypost}">
       
@@ -364,7 +425,7 @@ li span {
 
     	<!-- Show a fallback text if no photo is available -->
     	<p th:if="${photo.user == null or photo.user.photoBase64 == null}">No photo available</p>
-    	<input type="hidden" name="username" th:value="${photo.user.username}">
+    	
 	      <strong id="names" th:text="${photo.user.username}"></strong>
 	     
 	         
