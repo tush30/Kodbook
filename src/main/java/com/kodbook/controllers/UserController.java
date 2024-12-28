@@ -172,6 +172,7 @@ public class UserController {
 		//fetch the user object using username
 		User user =service.getProfileUsername(username1);
 		model.addAttribute("user", user);
+		//accesing indivual user which is looged through mapping
 		List<Post> post = user.getPosts();
 		model.addAttribute("userphotolist",post);
 		return "myProfile";

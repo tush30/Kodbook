@@ -76,17 +76,17 @@ public String addlike(@RequestParam Long idp,Model model,HttpSession session) {
 	Post post = service.getPost(idp);
 	post.setLike_count(post.getLike_count()+1);
 	service.updatePost(post);
-	List<Post> list = service.listall();
-	
-	model.addAttribute("photolist",list);
+//	List<Post> list = service.listall();
+//	
+//	model.addAttribute("photolist",list);
 	
 	//for like
 	// this section from dp image because when hit like button dp c'nt access so making acceptable when redirect to home page
-	String username1 =(String) session.getAttribute("username");
-	//fetch the user object using username
-	User user =service2.getProfileUsername(username1);
-	model.addAttribute("user", user);
-	
+//	String username1 =(String) session.getAttribute("username");
+//	//fetch the user object using username
+//	User user =service2.getProfileUsername(username1);
+//	model.addAttribute("user", user);
+//	
 	return "redirect:/refreshlogin";
 }
 @PostMapping("/addcomment")
@@ -109,16 +109,16 @@ public String addComment(@RequestParam Long idp,@RequestParam String comment, Mo
 	//at last upadte the post object which is saves the commets
 	service.updatePost(post);
 	
-	List<Post> list = service.listall();
-	model.addAttribute("photolist",list);
-	
+//	List<Post> list = service.listall();
+//	model.addAttribute("photolist",list);
+//	
 	//for comment
-		// this section from dp image because when hit like button dp c'nt access so making acceptable when redirect to home page
-		String username1 =(String) session.getAttribute("username");
-		//fetch the user object using username
-		User user =service2.getProfileUsername(username1);
-		model.addAttribute("user", user);
-	
+//		// this section from dp image because when hit like button dp c'nt access so making acceptable when redirect to home page
+//		String username1 =(String) session.getAttribute("username");
+//		//fetch the user object using username
+//		User user =service2.getProfileUsername(username1);
+//		model.addAttribute("user", user);
+//	
 	return "redirect:/refreshlogin";
 }
 
