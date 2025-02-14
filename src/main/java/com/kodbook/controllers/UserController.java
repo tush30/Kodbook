@@ -59,7 +59,7 @@ public class UserController {
 			//creatring seesion object
 			session.setAttribute("username", username);
 			model.addAttribute("session", session);
-			//fechoing dp in home page accening object useing user name by session 
+			//fetching dp in home page accening object useing user name by session 
 			User user =service.getProfileUsername(username);
 			if (user != null) {
 		        model.addAttribute("user", user);
@@ -80,7 +80,7 @@ public class UserController {
 	@PostMapping("/validatemail")
 	public String findEmail(@RequestParam String email,Model model) {
 		boolean status = service.validateEmail(email);
-		if(status == true) {
+		if(status) {
 			return "confirmpassword";
 		}else {
 			model.addAttribute("msg","Email is not found");
@@ -123,7 +123,7 @@ public class UserController {
 			Model model) {
 		boolean status = service.validateEmail(email);
 		
-		if(status == true) {
+		if(status) {
 			emailService.sendtextEMail(email);
 			return "checkEmail";
 		}else {

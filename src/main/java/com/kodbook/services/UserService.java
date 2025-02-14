@@ -22,6 +22,7 @@ public interface UserService {
 	String getuserName(String email);
 
 	User getProfileUsername(String username);
+	public User getuserDp(Long id) ;
 
 	
 

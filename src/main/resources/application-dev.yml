@@ -6,5 +6,5 @@ ACTIVE_PROFILE: dev
 EMAIL_HOST: smtp.gmail.com
 EMAIL_PORT: 587
 EMAIL_ID: tushrathod2002@gmail.com
-EMAIL_PASSWORD: axcg wqoq tqqc vzaf
+EMAIL_PASSWORD: your email app password
 VERIFY_EMAIL_HOST: http://localhost:${SERVER_PORT}

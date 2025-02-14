@@ -1,6 +1,7 @@
 package com.kodbook.controllers;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.query.NativeQuery.ReturnableResultNode;
@@ -65,9 +66,7 @@ public class NavigationController {
 		User user =service.getProfileUsername(username);
 		model.addAttribute("user", user);
 		
-		//getting all user post from who posted all posts getting from mapping where mapping set in during addpost of both user and post object
-		List<Post> mypost = user.getPosts();
-		model.addAttribute("mypost", mypost);
+		
 		return "showProfile";
 	}
 }

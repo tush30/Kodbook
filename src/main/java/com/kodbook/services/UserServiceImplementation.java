@@ -94,6 +94,13 @@ public class UserServiceImplementation implements UserService{
 		// TODO Auto-generated method stub
 		return repo.findByUsername(username);
 	}
+	
+public User getuserDp(Long id) {
+		
+		
+		return  repo.findById(id).get(); 
+	}
+	
 
 	
 

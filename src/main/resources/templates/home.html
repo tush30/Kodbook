@@ -343,7 +343,7 @@ li span {
     <!-- Left Sidebar -->
     <div class="sidebar">
       <ul>
-        <a href="">Home</a><br>
+        <a href="/refreshlogin">Home</a><br>
         <a href="/myprofile">My Profile</a><br>
         <a href="/logout">LogOut here</a>
       </ul>
@@ -351,71 +351,84 @@ li span {
 
     <!-- Feed Section -->
     <div class="feed">
-      <div class="create-post">
-        
-        <button onclick="showPopup()">New Post</button>
-      </div>
+		      <div class="create-post">
+		        
+		        <button onclick="showPopup()">New Post</button>
+		      </div>
 
       <!-- Example Posts -->
     
-      <div class="post" th:each="photo:${photolist}">
-      
-	<div id="post-name">
-		<form action="/visitprofile" method="get">
-		<img th:if="${photo.user != null and photo.user.photoBase64 != null}"
-         th:src="'data:image/jpeg;base64,' + ${photo.user.photoBase64}" 
-         alt="dp_image" id="profile" />
+     	 <div class="post" th:each="photo:${photolist}">
+		      
+					<div id="post-name">
+						<form action="/visitprofile" method="get">
+						<img th:if="${photo.user != null and photo.user.photoBase64 != null}"
+				         th:src="'data:image/jpeg;base64,' + ${photo.user.photoBase64}" 
+				         alt="dp_image" id="profile" />
+				
+				    	<!-- Show a fallback text if no photo is available -->
+				    	<p th:if="${photo.user == null || photo.user.photoBase64 == null}">No photo available</p>
+				    	
+				    	<input type="hidden" name="username" th:value="${photo.user.username}">
+					      <strong id="names" th:text="${photo.user.username}"></strong>
+					       <input type="submit" value="Visit profile">
+					        
+					       </form> 
+			 		</div>
+						 		<p th:text="${photo.caption}">[cpation]</p>
+							        
+							       <img th:if="${photo.photoBase64}"
+							        th:src="'data:image/jpeg;base64,'+${photo.photoBase64}" 
+							        alt="post_image">
+							      
+							       <p th:if="!${photo.photoBase64}">No photo available</p>
+							        <p th:if="${msg}" th:text="${msg}">[msg]</p>
+						        	
+			        	<div class="photo-section">
+						    <p><strong>Likes:</strong>
+						        <span th:text="${photo.like_count}">[like]</span>
+						    </p>
+						    <form action="/addlike" method="post">
+						        <input type="hidden" name="idp" th:value="${photo.idp}">
+						        <input type="submit" value="Like">
+						    </form>
+						    <form action="/addcomment" method="post">
+						        <input type="hidden" name="idp" th:value="${photo.idp}">
+						         
+						        <textarea name="comment" placeholder="Add your comment here..."></textarea>
+						        <input type="submit" value="Comment">
+						    </form>
+						    <ul>
+						        <li th:each="comment : ${photo.comments}">
+						        
+								<img th:if="${commentdp != null and commentdp.photoBase64 != null}"
+				         th:src="'data:image/jpeg;base64,' + ${commentdp.photoBase64}" 
+				         alt="dp_image" id="profile" />
+				
+				    	<!-- Show a fallback text if no photo is available -->
+				    	<p th:if="${commentdp == null || commentdp.photoBase64 == null}">No photo available</p>
+				    	
+				        
+					      <strong id="names" th:text="${user.username}"></strong>
+						            <span th:text="${comment}"></span>
+						        </li>
+						    </ul>
+						</div>
 
-    	<!-- Show a fallback text if no photo is available -->
-    	<p th:if="${photo.user == null or photo.user.photoBase64 == null}">No photo available</p>
-    	<input type="hidden" name="username" th:value="${photo.user.username}">
-	      <strong id="names" th:text="${photo.user.username}"></strong>
-	       <input type="submit" value="Visit profile">
-	        
-	       </form> 
-	 </div>
- 		<p th:text="${photo.caption}">[cpation]</p>
-	        
-	       <img th:if="${photo.photoBase64}"
-	        th:src="'data:image/jpeg;base64,'+${photo.photoBase64}" 
-	        alt="post_image">
-	      
-	       <p th:if="!${photo.photoBase64}">No photo available</p>
-	        <p th:if="${msg}" th:text="${msg}">[msg]</p>
-        	
-        	<div class="photo-section">
-			    <p><strong>Likes:</strong>
-			        <span th:text="${photo.like_count}">[like]</span>
-			    </p>
-			    <form action="/addlike" method="post">
-			        <input type="hidden" name="idp" th:value="${photo.idp}">
-			        <input type="submit" value="Like">
-			    </form>
-			    <form action="/addcomment" method="post">
-			        <input type="hidden" name="idp" th:value="${photo.idp}">
-			        <textarea name="comment" placeholder="Add your comment here..."></textarea>
-			        <input type="submit" value="Comment">
-			    </form>
-			    <ul>
-			        <li th:each="comment : ${photo.comments}">
-			            <span th:text="${comment}"></span>
-			        </li>
-			    </ul>
-			</div>
-
-    	</div>
-    
+    			</div>
+   
     </div>
    
-    <!-- Right Sidebar -->
-    <div class="right-sidebar">
-      <h3>Online Friends</h3>
-      <ul class="online-friends">
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> John</li>
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mary</li>
-        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mike</li>
-      </ul>
-    </div>
+		    <!-- Right Sidebar -->
+			    <div class="right-sidebar">
+			      <h3>Online Friends</h3>
+			      <ul class="online-friends">
+			        <li><img src="https://via.placeholder.com/50" alt="Friend"> John</li>
+			        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mary</li>
+			        <li><img src="https://via.placeholder.com/50" alt="Friend"> Mike</li>
+			      </ul>
+			    </div>
+		  
   </div>
 
   <!-- Overlay -->
@@ -425,13 +438,12 @@ li span {
   <div class="popup" id="popup">
     <button class="close-btn" onclick="hidePopup()" >X</button>
     <h2>Create Post</h2>
-    <form action="/addpost" method="post" enctype="multipart/form-data">
-       
-      <label for="caption">Caption<input type="text" name="caption" id="caption">
-      </label>
-      <label for="photo">Photo<input type="file" name="photo" accept="image/*" required id="image">
-      <button type="submit">Post</button>
-	</form>
+	    <form action="/addpost" method="post" enctype="multipart/form-data">
+	       
+	      <label for="caption">Caption</label><input type="text" name="caption" id="caption">
+	      <label for="photo">Photo </label><input type="file" name="photo" accept="image/*" required id="image">
+	      <button type="submit">Post</button>
+		</form>
 	</div>
   <!-- Pop cr
   eate post scrpit -->

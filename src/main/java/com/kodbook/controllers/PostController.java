@@ -30,8 +30,8 @@ UserService service2;
 
 @PostMapping("/addpost")
 public String addPost(@RequestParam String caption,@RequestParam MultipartFile photo,Model model,HttpSession session) {
-	//for like
-		// this section from dp image because when hit like button dp c'nt access so making acceptable when redirect to home page
+	
+		//adding post for logged user
 		String username1 =(String) session.getAttribute("username");
 		//fetch the user object using username
 		User user =service2.getProfileUsername(username1);
@@ -55,9 +55,10 @@ public String addPost(@RequestParam String caption,@RequestParam MultipartFile p
 	
 	service.createpost(pp);// save the post
 
-//	List<Post> list = service.listall();
-//	model.addAttribute("photolist",list);
+	List<Post> list = service.listall();
+	model.addAttribute("photolist",list);
 	
+	//for mapping
 	//updating user object
 	List<Post> posts = user.getPosts();
 	if(posts == null) {
@@ -90,7 +91,7 @@ public String addlike(@RequestParam Long idp,Model model,HttpSession session) {
 	return "redirect:/refreshlogin";
 }
 @PostMapping("/addcomment")
-public String addComment(@RequestParam Long idp,@RequestParam String comment, Model model,HttpSession session) {
+public String addComment(@RequestParam Long idp,@RequestParam Long id,@RequestParam String comment, Model model,HttpSession session) {
 	//getting id ans storing in post object
 	
 	System.out.println(comment);
@@ -107,19 +108,24 @@ public String addComment(@RequestParam Long idp,@RequestParam String comment, Mo
 	// after that set the list comments 
 	post.setComments(comments);
 	//at last upadte the post object which is saves the commets
-	service.updatePost(post);
 	
-//	List<Post> list = service.listall();
-//	model.addAttribute("photolist",list);
+
+	service.updatePost(post);
+	User dpUser=service2.getuserDp(id);
+	model.addAttribute("commentdp", dpUser);
+	List<Post> list = service.listall();
+	model.addAttribute("photolist",list);
 //	
 	//for comment
 //		// this section from dp image because when hit like button dp c'nt access so making acceptable when redirect to home page
-//		String username1 =(String) session.getAttribute("username");
-//		//fetch the user object using username
-//		User user =service2.getProfileUsername(username1);
-//		model.addAttribute("user", user);
+		String username1 =(String) session.getAttribute("username");
+		User user =service2.getProfileUsername(username1);
+		model.addAttribute("user", user);
+	//fetch the user object using username
+		
 //	
-	return "redirect:/refreshlogin";
+		
+	return "home";
 }
 
 
